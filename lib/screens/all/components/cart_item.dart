@@ -111,19 +111,28 @@ class CartItem extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                 child: item.coverImage != null
-                    ? FadeInImage(
-                        placeholder:
-                            AssetImage('assets/images/placeholder.jpg'),
-                        image: FileImage(item.coverImage),
-                        width: double.infinity,
-                        height: MediaQuery.of(context).size.width / 3 * 2,
-                        fit: BoxFit.cover,
+                    ? Hero(
+                        tag: item.id,
+                        child: FadeInImage(
+                          placeholder:
+                              AssetImage('assets/images/placeholder.jpg'),
+                          image: FileImage(item.coverImage),
+                          width: double.infinity,
+                          height: MediaQuery.of(context).size.width / 3 * 2,
+                          fit: BoxFit.cover,
+                        ),
                       )
                     : Container(
                         width: double.infinity,
-                        height: 30,
-                        color: Colors.grey[300],
-                        alignment: Alignment.center,
+                        height: MediaQuery.of(context).size.width / 3 * 2,
+                        child: Hero(
+                          tag: item.id,
+                          child: Image.asset(
+                            'assets/images/placeholder.jpg',
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
               ),
               ListTile(

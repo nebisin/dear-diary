@@ -1,10 +1,10 @@
-import 'package:dear_dairy/models/paper.dart';
 import 'package:dear_dairy/provider/papers.dart';
 import 'package:dear_dairy/screens/create/create_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'components/detail_card.dart';
+import 'components/favorite_button.dart';
 
 class DetailScreen extends StatelessWidget {
   @override
@@ -61,129 +61,97 @@ class DetailScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(item.title),
-        actions: [
-          PopupMenuButton(
-            onSelected: (value) {
-              if (value == 'edit') {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CreateScreen(item)));
-              } else {
-                _showDeleteDialog();
-              }
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              PopupMenuItem(
-                value: 'edit',
-                child: ListTile(
-                  leading: Icon(
-                    Icons.edit,
-                    color: Theme.of(context).accentColor,
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: MediaQuery.of(context).size.width / 3 * 2,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(item.title),
+              background: item.coverImage == null
+                  ? Hero(
+                      tag: item.id,
+                      child: Image.asset(
+                        'assets/images/placeholder.jpg',
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      ),
+                    )
+                  : Hero(
+                      tag: item.id,
+                      child: Image.file(
+                        item.coverImage,
+                        fit: BoxFit.cover,
+                        width: double.infinity,
+                      ),
+                    ),
+            ),
+            actions: [
+              PopupMenuButton(
+                onSelected: (value) {
+                  if (value == 'edit') {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CreateScreen(item)));
+                  } else {
+                    _showDeleteDialog();
+                  }
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                  PopupMenuItem(
+                    value: 'edit',
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.edit,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      title: Text(
+                        'Edit',
+                        style: TextStyle(color: Theme.of(context).accentColor),
+                      ),
+                    ),
                   ),
-                  title: Text(
-                    'Edit',
-                    style: TextStyle(color: Theme.of(context).accentColor),
+                  PopupMenuDivider(),
+                  PopupMenuItem(
+                    value: 'delete',
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.delete,
+                        color: Theme.of(context).errorColor,
+                      ),
+                      title: Text(
+                        'Delete',
+                        style: TextStyle(color: Theme.of(context).errorColor),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              PopupMenuDivider(),
-              PopupMenuItem(
-                value: 'delete',
-                child: ListTile(
-                  leading: Icon(
-                    Icons.delete,
-                    color: Theme.of(context).errorColor,
-                  ),
-                  title: Text(
-                    'Delete',
-                    style: TextStyle(color: Theme.of(context).errorColor),
-                  ),
-                ),
+                ],
               ),
             ],
           ),
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                DetailCard(item: item),
+                Container(
+                  alignment: Alignment.topLeft,
+                  padding: EdgeInsets.all(20),
+                  child: item.body != null
+                      ? Text(
+                          item.body,
+                          style: TextStyle(
+                            height: 1.7,
+                            fontSize: 18,
+                          ),
+                          textAlign: TextAlign.start,
+                        )
+                      : null,
+                ),
+              ],
+            ),
+          )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.width / 3 * 2,
-              color: Colors.grey[300],
-              child: item.coverImage == null
-                  ? null
-                  : Image.file(
-                      item.coverImage,
-                      fit: BoxFit.cover,
-                      width: double.infinity,
-                    ),
-            ),
-            DetailCard(item: item),
-            Container(
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.all(20),
-              child: item.body != null
-                  ? Text(
-                      item.body,
-                      style: TextStyle(
-                        height: 1.7,
-                        fontSize: 18,
-                      ),
-                      textAlign: TextAlign.start,
-                    )
-                  : null,
-            ),
-          ],
-        ),
-      ),
       floatingActionButton: FavoriteButton(item: item),
-    );
-  }
-}
-
-class FavoriteButton extends StatefulWidget {
-  const FavoriteButton({
-    Key key,
-    @required this.item,
-  }) : super(key: key);
-
-  final Paper item;
-
-  @override
-  _FavoriteButtonState createState() => _FavoriteButtonState();
-}
-
-class _FavoriteButtonState extends State<FavoriteButton> {
-  bool isFavorite = false;
-
-  @override
-  void initState() {
-    setState(() {
-      isFavorite = widget.item.isFavorite;
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () {
-        Provider.of<Papers>(context, listen: false).updatePaper(
-          id: widget.item.id,
-          title: widget.item.title,
-          body: widget.item.body,
-          mood: widget.item.mood,
-          date: widget.item.date,
-          coverImage: widget.item.coverImage,
-          isFavorite: !isFavorite,
-        );
-        setState(() {
-          isFavorite = !isFavorite;
-        });
-      },
-      child: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
     );
   }
 }

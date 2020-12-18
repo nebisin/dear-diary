@@ -6,6 +6,8 @@ import 'package:dear_dairy/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'helpers/custom_route.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -57,6 +59,10 @@ class MyApp extends StatelessWidget {
               color: Colors.white70,
             ),
           ),
+          pageTransitionsTheme: PageTransitionsTheme(builders: {
+            TargetPlatform.android: CustomPageTransitionBuilder(),
+            TargetPlatform.iOS: CustomPageTransitionBuilder(),
+          }),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         debugShowCheckedModeBanner: false,

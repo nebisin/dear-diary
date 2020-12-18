@@ -31,7 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
       ),
-      body: page == 0 ? AllScreen() : FavoritesScreen(),
+      body: AnimatedSwitcher(
+        duration: Duration(milliseconds: 300),
+        child: page == 0 ? AllScreen() : FavoritesScreen(),
+      ),
       bottomNavigationBar: MainBottomNavigation(page, setPage),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
