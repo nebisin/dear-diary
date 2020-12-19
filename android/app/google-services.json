@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "784067165247",
+    "project_id": "dear-diary-flutter",
+    "storage_bucket": "dear-diary-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784067165247:android:a1fcab4f46ccdd378a8c8a",
+        "android_client_info": {
+          "package_name": "com.muaccel.dear_dairy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784067165247-csmkut5njrtk6vtquvtum0v3taeqhutq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6X0wCm9BkD1tGHypYnQkRzC4dCP-5MT4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784067165247-csmkut5njrtk6vtquvtum0v3taeqhutq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

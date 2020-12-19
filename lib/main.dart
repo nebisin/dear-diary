@@ -7,12 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'helpers/custom_route.dart';
+import 'dart:async';
 
-void main() {
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -65,6 +74,9 @@ class MyApp extends StatelessWidget {
           }),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: analytics),
+        ],
         debugShowCheckedModeBanner: false,
         home: HomeScreen(),
         routes: {
