@@ -7,13 +7,18 @@ import 'package:provider/provider.dart';
 class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<Papers>(
-      builder: (ctx, papers, child) => ListView.builder(
+    return Consumer<Papers>(builder: (ctx, papers, child) {
+      if (papers.favorites.length == 0) {
+        return Center(
+          child: Text('You don\'t have any favorite day yet.'),
+        );
+      }
+      return ListView.builder(
         itemBuilder: (ctx, i) => i.isEven == true
             ? FavoriteItem(papers.favorites[i], i)
             : FavoriteItemLeft(papers.favorites[i], i),
         itemCount: papers.favorites.length,
-      ),
-    );
+      );
+    });
   }
 }

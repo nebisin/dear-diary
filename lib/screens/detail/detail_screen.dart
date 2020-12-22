@@ -1,10 +1,10 @@
 import 'package:dear_dairy/provider/papers.dart';
-import 'package:dear_dairy/screens/create/create_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'components/detail_card.dart';
 import 'components/favorite_button.dart';
+import 'components/pop_menu.dart';
 
 class DetailScreen extends StatelessWidget {
   @override
@@ -87,45 +87,7 @@ class DetailScreen extends StatelessWidget {
                     ),
             ),
             actions: [
-              PopupMenuButton(
-                onSelected: (value) {
-                  if (value == 'edit') {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CreateScreen(item)));
-                  } else {
-                    _showDeleteDialog();
-                  }
-                },
-                itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                  PopupMenuItem(
-                    value: 'edit',
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.edit,
-                        color: Theme.of(context).accentColor,
-                      ),
-                      title: Text(
-                        'Edit',
-                        style: TextStyle(color: Theme.of(context).accentColor),
-                      ),
-                    ),
-                  ),
-                  PopupMenuDivider(),
-                  PopupMenuItem(
-                    value: 'delete',
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.delete,
-                        color: Theme.of(context).errorColor,
-                      ),
-                      title: Text(
-                        'Delete',
-                        style: TextStyle(color: Theme.of(context).errorColor),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              PopMenu(item: item, showDeleteDialog: _showDeleteDialog,),
             ],
           ),
           SliverList(

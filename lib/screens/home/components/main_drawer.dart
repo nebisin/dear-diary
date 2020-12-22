@@ -1,3 +1,5 @@
+// Deprecated for now
+
 import 'package:flutter/material.dart';
 
 class MainDrawer extends StatelessWidget {

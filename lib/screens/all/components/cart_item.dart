@@ -63,27 +63,26 @@ class CartItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        dateBefore == null || dateBefore.day != item.date.day
-            ? Opacity(
-                opacity: 0.5,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 20,
-                  ),
-                  child: Text(
-                    DateFormat('MMMM d').format(item.date),
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      color: Colors.grey,
-                      fontFamily: 'Nunito',
-                    ),
-                  ),
+        if (dateBefore == null || dateBefore.day != item.date.day)
+          Opacity(
+            opacity: 0.5,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 20,
+              ),
+              child: Text(
+                DateFormat('MMMM d').format(item.date),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                  color: Colors.grey,
+                  fontFamily: 'Nunito',
                 ),
-              )
-            : Center(),
+              ),
+            ),
+          ),
         GestureDetector(
           onTap: () {
             Navigator.of(context)
