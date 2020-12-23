@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dear_dairy/models/paper.dart';
 import 'package:dear_dairy/provider/papers.dart';
 import 'package:dear_dairy/screens/create/components/mood_widget.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,6 +21,16 @@ class CreateScreen extends StatefulWidget {
 }
 
 class _CreateScreenState extends State<CreateScreen> {
+  BannerAd _bannerAd;
+
+  BannerAd createBannerAd() {
+    return BannerAd(
+      adUnitId: 'ca-app-pub-1639338975133942/6880648672',
+      size: AdSize.smartBanner,
+      targetingInfo: MobileAdTargetingInfo(),
+    );
+  }
+
   var _loading = false;
   final _form = GlobalKey<FormState>();
   final _titleController = TextEditingController();
@@ -37,6 +48,8 @@ class _CreateScreenState extends State<CreateScreen> {
       _mood = widget.editedItem.mood;
       _pickedImage = widget.editedItem.coverImage;
     }
+    _bannerAd = createBannerAd();
+    _bannerAd..load()..show();
     super.initState();
   }
 
@@ -48,6 +61,7 @@ class _CreateScreenState extends State<CreateScreen> {
   void dispose() {
     _titleController.dispose();
     _bodyController.dispose();
+    _bannerAd?.dispose();
     super.dispose();
   }
 
@@ -143,6 +157,7 @@ class _CreateScreenState extends State<CreateScreen> {
               MoodWidget(_mood, _setMood),
               FormWidget(_form, _titleController, _bodyController, _savePaper,
                   _loading),
+              SizedBox(height: 100,)
             ],
           ),
         ),
