@@ -36,7 +36,7 @@ class CustomPageTransitionBuilder extends PageTransitionsBuilder {
     Animation<double> animation,
     Animation<double> secondaryAnimation,
     Widget child,
-  ) {
+  ) {  
     if (route.settings.name == '/') {
       return child;
     } else {

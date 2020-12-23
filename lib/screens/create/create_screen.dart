@@ -48,7 +48,6 @@ class _CreateScreenState extends State<CreateScreen> {
   void dispose() {
     _titleController.dispose();
     _bodyController.dispose();
-
     super.dispose();
   }
 

@@ -21,6 +21,8 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +76,7 @@ class MyApp extends StatelessWidget {
           }),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        navigatorObservers: [
-          FirebaseAnalyticsObserver(analytics: analytics),
-        ],
+        navigatorObservers: <NavigatorObserver>[observer],
         debugShowCheckedModeBanner: false,
         home: HomeScreen(),
         routes: {

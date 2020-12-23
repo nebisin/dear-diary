@@ -1,4 +1,5 @@
 import 'package:dear_dairy/provider/papers.dart';
+import 'package:dear_dairy/services/advert_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,7 +7,20 @@ import 'components/detail_card.dart';
 import 'components/favorite_button.dart';
 import 'components/pop_menu.dart';
 
-class DetailScreen extends StatelessWidget {
+class DetailScreen extends StatefulWidget {
+  @override
+  _DetailScreenState createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  final AdvertService _advertService = AdvertService();
+
+@override
+  void initState() {
+    _advertService.showIntersitial();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final id = ModalRoute.of(context).settings.arguments as String;
