@@ -1,6 +1,9 @@
+// import 'dart:io';
+
 import 'package:dear_dairy/provider/papers.dart';
-import 'package:dear_dairy/services/advert_service.dart';
+// import 'package:dear_dairy/services/advert_service.dart';
 import 'package:flutter/material.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
 
 import 'components/detail_card.dart';
@@ -13,12 +16,20 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  final AdvertService _advertService = AdvertService();
+  // final AdvertService _advertService = AdvertService();
+  final InAppReview inAppReview = InAppReview.instance;
 
-@override
+  @override
   void initState() {
-    _advertService.showIntersitial();
+    // _advertService.showIntersitial();
     super.initState();
+    _requestReview();
+  }
+
+  Future<void> _requestReview() async {
+    if (await inAppReview.isAvailable()) {
+      inAppReview.requestReview();
+    }
   }
 
   @override
@@ -101,7 +112,10 @@ class _DetailScreenState extends State<DetailScreen> {
                     ),
             ),
             actions: [
-              PopMenu(item: item, showDeleteDialog: _showDeleteDialog,),
+              PopMenu(
+                item: item,
+                showDeleteDialog: _showDeleteDialog,
+              ),
             ],
           ),
           SliverList(

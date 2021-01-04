@@ -100,9 +100,9 @@ class CartItem extends StatelessWidget {
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(0.23),
-                  blurRadius: 15,
-                  offset: Offset(0, 10),
+                  blurRadius: 27,
+                  offset: Offset(0, 15),
+                  color: Colors.black12,
                 )
               ],
             ),

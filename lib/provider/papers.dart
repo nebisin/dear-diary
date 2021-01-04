@@ -56,7 +56,6 @@ class Papers with ChangeNotifier {
     try {
       final dataList = await DBHelper.getData('papers');
 
-      // There is a problem with image!
       _items = dataList
           .map((e) => Paper(
                 id: e['id'],
