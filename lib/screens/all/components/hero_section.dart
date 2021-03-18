@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class HeroSection extends StatelessWidget {
   const HeroSection({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

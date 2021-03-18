@@ -7,7 +7,7 @@ import 'package:path_provider/path_provider.dart' as syspaths;
 
 class PhotoWidget extends StatefulWidget {
   final Function onSelectImage;
-  final File pickedImage;
+  final File? pickedImage;
 
   PhotoWidget(this.onSelectImage, this.pickedImage);
 
@@ -16,7 +16,7 @@ class PhotoWidget extends StatefulWidget {
 }
 
 class _PhotoWidgetState extends State<PhotoWidget> {
-  File _storedImage;
+  File? _storedImage;
   final picker = ImagePicker();
 
   @override
@@ -41,7 +41,7 @@ class _PhotoWidgetState extends State<PhotoWidget> {
     final appDir = await syspaths.getApplicationDocumentsDirectory();
     final fileName = path.basename(imageFile.path);
 
-    final savedImage = await _storedImage.copy('${appDir.path}/$fileName');
+    final savedImage = await _storedImage!.copy('${appDir.path}/$fileName');
 
     widget.onSelectImage(savedImage);
   }
@@ -81,7 +81,7 @@ class _PhotoWidgetState extends State<PhotoWidget> {
       alignment: Alignment.center,
       child: _storedImage != null
           ? Image.file(
-              _storedImage,
+              _storedImage!,
               fit: BoxFit.cover,
               width: double.infinity,
             )

@@ -10,8 +10,6 @@ import 'helpers/custom_route.dart';
 import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,10 +18,6 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -33,6 +27,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
           accentColor: Color(0xDD0C9869),
+          brightness: Brightness.dark,
           scaffoldBackgroundColor: Color.fromRGBO(238, 243, 251, 1),
           appBarTheme: AppBarTheme(
             color: Color(0xDD0C9869),
@@ -69,6 +64,16 @@ class MyApp extends StatelessWidget {
             subtitle2: TextStyle(
               color: Colors.white70,
             ),
+            bodyText1: TextStyle(
+              color: Color.fromRGBO(85, 85, 85, 1),
+              fontWeight: FontWeight.w400,
+              fontSize: 18,
+            ),
+            bodyText2: TextStyle(
+              color: Color.fromRGBO(85, 85, 85, 1),
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+            ),
           ),
           pageTransitionsTheme: PageTransitionsTheme(builders: {
             TargetPlatform.android: CustomPageTransitionBuilder(),
@@ -76,7 +81,6 @@ class MyApp extends StatelessWidget {
           }),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        navigatorObservers: <NavigatorObserver>[observer],
         debugShowCheckedModeBanner: false,
         home: HomeScreen(),
         routes: {

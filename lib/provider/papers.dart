@@ -16,11 +16,11 @@ class Papers with ChangeNotifier {
   }
 
   Future<Paper> addPaper({
-    String title,
-    String body,
-    File coverImage,
-    String mood,
-    DateTime date,
+    String? title,
+    String? body,
+    File? coverImage,
+    String? mood,
+    DateTime? date,
   }) async {
     final newPaper = Paper(
       id: DateTime.now().toString(),
@@ -39,8 +39,8 @@ class Papers with ChangeNotifier {
         'title': newPaper.title,
         'body': newPaper.body,
         'mood': newPaper.mood,
-        'date': newPaper.date.toIso8601String(),
-        'image': newPaper.coverImage != null ? newPaper.coverImage.path : null,
+        'date': newPaper.date!.toIso8601String(),
+        'image': newPaper.coverImage != null ? newPaper.coverImage!.path : null,
         'createdAt': newPaper.createdAt.toIso8601String(),
         'isFavorite': 0,
       });
@@ -74,7 +74,7 @@ class Papers with ChangeNotifier {
     }
   }
 
-  Future<void> deletePaper(String id) async {
+  Future<void> deletePaper(String? id) async {
     final deletedIndex = _items.indexWhere((element) => element.id == id);
     final deletedItem = _items.removeAt(deletedIndex);
     notifyListeners();
@@ -89,13 +89,13 @@ class Papers with ChangeNotifier {
   }
 
   Future<Paper> updatePaper({
-    String id,
-    String title,
-    String body,
-    File coverImage,
-    String mood,
-    DateTime date,
-    bool isFavorite,
+    String? id,
+    String? title,
+    String? body,
+    File? coverImage,
+    String? mood,
+    DateTime? date,
+    bool? isFavorite,
   }) async {
     final newPaper = Paper(
       id: id,
@@ -119,8 +119,8 @@ class Papers with ChangeNotifier {
         'title': newPaper.title,
         'body': newPaper.body,
         'mood': newPaper.mood,
-        'date': newPaper.date.toIso8601String(),
-        'image': newPaper.coverImage != null ? newPaper.coverImage.path : null,
+        'date': newPaper.date!.toIso8601String(),
+        'image': newPaper.coverImage != null ? newPaper.coverImage!.path : null,
         'createdAt': newPaper.createdAt.toIso8601String(),
         'isFavorite': newPaper.isFavorite == true ? 1 : 0,
       });
@@ -133,7 +133,7 @@ class Papers with ChangeNotifier {
     }
   }
 
-  Paper findById(String id) {
+  Paper findById(String? id) {
     return _items.firstWhere((place) => place.id == id);
   }
 }

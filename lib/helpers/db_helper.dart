@@ -16,7 +16,7 @@ class DBHelper {
     );
   }
 
-  static Future<void> insert(String table, Map<String, Object> data) async {
+  static Future<void> insert(String table, Map<String, Object?> data) async {
     try {
       final db = await DBHelper.database();
 
@@ -31,7 +31,7 @@ class DBHelper {
     }
   }
 
-  static Future<void> delete(String table, String id) async {
+  static Future<void> delete(String table, String? id) async {
     try {
       final db = await DBHelper.database();
 
@@ -41,11 +41,11 @@ class DBHelper {
     }
   }
 
-  static Future<void> update(String table, Map<String, Object> data) async {
+  static Future<void> update(String table, Map<String, Object?> data) async {
     try {
       final db = await DBHelper.database();
 
-      return await db
+      await db
           .update(table, data, where: 'id = ?', whereArgs: [data['id']]);
     } catch (e) {
       throw e;

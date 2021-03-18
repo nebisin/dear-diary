@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:dear_dairy/models/paper.dart';
 import 'package:dear_dairy/provider/papers.dart';
 import 'package:dear_dairy/screens/create/components/mood_widget.dart';
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +11,7 @@ import 'components/form_widget.dart';
 import 'components/photo_widget.dart';
 
 class CreateScreen extends StatefulWidget {
-  final Paper editedItem;
+  final Paper? editedItem;
 
   CreateScreen([this.editedItem]);
 
@@ -21,35 +20,25 @@ class CreateScreen extends StatefulWidget {
 }
 
 class _CreateScreenState extends State<CreateScreen> {
-  BannerAd _bannerAd;
-
-  BannerAd createBannerAd() {
-    return BannerAd(
-      adUnitId: 'ca-app-pub-1639338975133942/6880648672',
-      size: AdSize.smartBanner,
-      targetingInfo: MobileAdTargetingInfo(),
-    );
-  }
 
   var _loading = false;
   final _form = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _bodyController = TextEditingController();
-  var _date = DateTime.now();
-  var _mood = 'good';
-  File _pickedImage;
+  DateTime? _date = DateTime.now();
+  String? _mood = 'good';
+  File? _pickedImage;
 
   @override
   void initState() {
     if (widget.editedItem != null) {
-      _titleController.text = widget.editedItem.title;
-      _bodyController.text = widget.editedItem.body;
-      _date = widget.editedItem.date;
-      _mood = widget.editedItem.mood;
-      _pickedImage = widget.editedItem.coverImage;
+      _titleController.text = widget.editedItem!.title!;
+      _bodyController.text = widget.editedItem!.body!;
+      _date = widget.editedItem!.date;
+      _mood = widget.editedItem!.mood;
+      _pickedImage = widget.editedItem!.coverImage;
     }
-    _bannerAd = createBannerAd();
-    _bannerAd..load()..show();
+
     super.initState();
   }
 
@@ -61,7 +50,6 @@ class _CreateScreenState extends State<CreateScreen> {
   void dispose() {
     _titleController.dispose();
     _bodyController.dispose();
-    _bannerAd?.dispose();
     super.dispose();
   }
 
@@ -82,7 +70,7 @@ class _CreateScreenState extends State<CreateScreen> {
       return;
     }
 
-    final isValid = _form.currentState.validate();
+    final isValid = _form.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -104,13 +92,13 @@ class _CreateScreenState extends State<CreateScreen> {
       );
     } else {
       newPaper = await Provider.of<Papers>(context, listen: false).updatePaper(
-        id: widget.editedItem.id,
+        id: widget.editedItem!.id,
         title: _titleController.text,
         body: _bodyController.text,
         mood: _mood,
         date: _date,
         coverImage: _pickedImage,
-        isFavorite: widget.editedItem.isFavorite,
+        isFavorite: widget.editedItem!.isFavorite,
       );
     }
     Navigator.of(context).pushNamedAndRemoveUntil(

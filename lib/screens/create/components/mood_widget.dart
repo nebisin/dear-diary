@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MoodWidget extends StatelessWidget {
-  final String mood;
+  final String? mood;
   final Function setMood;
 
   MoodWidget(this.mood, this.setMood);

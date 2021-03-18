@@ -10,7 +10,7 @@ import 'mood_icon.dart';
 class CartItem extends StatelessWidget {
   final Paper item;
   final int index;
-  final DateTime dateBefore;
+  final DateTime? dateBefore;
 
   CartItem(this.item, this.index, [this.dateBefore]);
 
@@ -23,7 +23,7 @@ class CartItem extends StatelessWidget {
         Widget snackBar = SnackBar(
           content: Text('Something went wrong! Please try again later.'),
         );
-        Scaffold.of(context).showSnackBar(snackBar);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar as SnackBar);
       }
     }
 
@@ -38,7 +38,7 @@ class CartItem extends StatelessWidget {
             ),
             content: Text('Are you sure to delete this sheet?'),
             actions: [
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   _deleteSelf();
                   Navigator.of(context).pop();
@@ -48,7 +48,7 @@ class CartItem extends StatelessWidget {
                   style: TextStyle(color: Theme.of(context).errorColor),
                 ),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -63,7 +63,7 @@ class CartItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (dateBefore == null || dateBefore.day != item.date.day)
+        if (dateBefore == null || dateBefore!.day != item.date!.day)
           Opacity(
             opacity: 0.5,
             child: Padding(
@@ -73,7 +73,7 @@ class CartItem extends StatelessWidget {
                 top: 20,
               ),
               child: Text(
-                DateFormat('MMMM d').format(item.date),
+                DateFormat('MMMM d').format(item.date!),
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
@@ -111,11 +111,11 @@ class CartItem extends StatelessWidget {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                 child: item.coverImage != null
                     ? Hero(
-                        tag: item.id,
+                        tag: item.id!,
                         child: FadeInImage(
                           placeholder:
                               AssetImage('assets/images/placeholder.jpg'),
-                          image: FileImage(item.coverImage),
+                          image: FileImage(item.coverImage!),
                           width: double.infinity,
                           height: MediaQuery.of(context).size.width / 3 * 2,
                           fit: BoxFit.cover,
@@ -125,7 +125,7 @@ class CartItem extends StatelessWidget {
                         width: double.infinity,
                         height: MediaQuery.of(context).size.width / 3 * 2,
                         child: Hero(
-                          tag: item.id,
+                          tag: item.id!,
                           child: Image.asset(
                             'assets/images/placeholder.jpg',
                             width: double.infinity,
@@ -137,15 +137,19 @@ class CartItem extends StatelessWidget {
               ListTile(
                 leading: MoodIcon(item.mood),
                 title: Text(
-                  item.title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  item.title!,
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
-                subtitle: Text(DateFormat.MMMMEEEEd().format(item.date)),
+                subtitle: Text(
+                  DateFormat.MMMMEEEEd().format(item.date!),
+                  style: Theme.of(context).textTheme.subtitle2,
+                ),
                 trailing: IconButton(
-                  icon: Icon(
-                      item.isFavorite ? Icons.favorite : Icons.favorite_border),
+                  icon: Icon(item.isFavorite!
+                      ? Icons.favorite
+                      : Icons.favorite_border),
                   onPressed: () {
                     Provider.of<Papers>(context, listen: false).updatePaper(
                       id: item.id,
@@ -154,7 +158,7 @@ class CartItem extends StatelessWidget {
                       mood: item.mood,
                       date: item.date,
                       coverImage: item.coverImage,
-                      isFavorite: !item.isFavorite,
+                      isFavorite: !item.isFavorite!,
                     );
                   },
                   color: Theme.of(context).primaryColor,

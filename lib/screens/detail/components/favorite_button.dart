@@ -5,8 +5,8 @@ import 'package:provider/provider.dart';
 
 class FavoriteButton extends StatefulWidget {
   const FavoriteButton({
-    Key key,
-    @required this.item,
+    Key? key,
+    required this.item,
   }) : super(key: key);
 
   final Paper item;
@@ -16,7 +16,7 @@ class FavoriteButton extends StatefulWidget {
 }
 
 class _FavoriteButtonState extends State<FavoriteButton> {
-  bool isFavorite = false;
+  bool? isFavorite = false;
 
   @override
   void initState() {
@@ -37,13 +37,13 @@ class _FavoriteButtonState extends State<FavoriteButton> {
           mood: widget.item.mood,
           date: widget.item.date,
           coverImage: widget.item.coverImage,
-          isFavorite: !isFavorite,
+          isFavorite: !isFavorite!,
         );
         setState(() {
-          isFavorite = !isFavorite;
+          isFavorite = !isFavorite!;
         });
       },
-      child: Icon(isFavorite ? Icons.favorite : Icons.favorite_border),
+      child: Icon(isFavorite! ? Icons.favorite : Icons.favorite_border),
     );
   }
 }

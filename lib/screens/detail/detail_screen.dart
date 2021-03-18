@@ -34,7 +34,7 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final id = ModalRoute.of(context).settings.arguments as String;
+    final id = ModalRoute.of(context)!.settings.arguments as String?;
     final item = Provider.of<Papers>(
       context,
       listen: false,
@@ -48,7 +48,7 @@ class _DetailScreenState extends State<DetailScreen> {
       } catch (e) {
         snackBar = SnackBar(
             content: Text('Something went wrong! Please try again later.'));
-        Scaffold.of(context).showSnackBar(snackBar);
+        ScaffoldMessenger.of(context).showSnackBar(snackBar as SnackBar);
       }
     }
 
@@ -63,7 +63,7 @@ class _DetailScreenState extends State<DetailScreen> {
             ),
             content: Text('Are you sure to delete this sheet?'),
             actions: [
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   _deleteSelf();
                   Navigator.of(context).pop();
@@ -73,7 +73,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   style: TextStyle(color: Theme.of(context).errorColor),
                 ),
               ),
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -92,10 +92,10 @@ class _DetailScreenState extends State<DetailScreen> {
             expandedHeight: MediaQuery.of(context).size.width / 3 * 2,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(item.title),
+              title: Text(item.title!),
               background: item.coverImage == null
                   ? Hero(
-                      tag: item.id,
+                      tag: item.id!,
                       child: Image.asset(
                         'assets/images/placeholder.jpg',
                         fit: BoxFit.cover,
@@ -103,9 +103,9 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                     )
                   : Hero(
-                      tag: item.id,
+                      tag: item.id!,
                       child: Image.file(
-                        item.coverImage,
+                        item.coverImage!,
                         fit: BoxFit.cover,
                         width: double.infinity,
                       ),
@@ -127,7 +127,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   padding: EdgeInsets.all(20),
                   child: item.body != null
                       ? Text(
-                          item.body,
+                          item.body!,
                           style: TextStyle(
                             height: 1.7,
                             fontSize: 18,

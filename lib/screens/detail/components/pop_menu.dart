@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class PopMenu extends StatelessWidget {
   const PopMenu({
-    Key key,
-    @required this.item,
-    @required this.showDeleteDialog,
+    Key? key,
+    required this.item,
+    required this.showDeleteDialog,
   }) : super(key: key);
 
   final Paper item;
@@ -15,7 +15,7 @@ class PopMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      onSelected: (value) {
+      onSelected: (dynamic value) {
         if (value == 'edit') {
           Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => CreateScreen(item)));

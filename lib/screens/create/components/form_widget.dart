@@ -54,7 +54,7 @@ class _FormWidgetState extends State<FormWidget> {
                 FocusScope.of(context).requestFocus(_bodyFocusNode);
               },
               validator: (value) {
-                if (value.isEmpty) {
+                if (value!.isEmpty) {
                   return 'Please enter a title!';
                 }
                 return null;
@@ -86,7 +86,7 @@ class _FormWidgetState extends State<FormWidget> {
               alignment: Alignment.bottomRight,
               child: widget.loading
                   ? CircularProgressIndicator()
-                  : RaisedButton(
+                  : ElevatedButton(
                       onPressed: widget.savePaper,
                       child: Text(
                         'Save',
@@ -95,10 +95,12 @@ class _FormWidgetState extends State<FormWidget> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      color: Theme.of(context).accentColor,
-                      textColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.0),
+                      style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).accentColor,
+                        onPrimary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16.0),
+                        ),
                       ),
                     ),
             ),

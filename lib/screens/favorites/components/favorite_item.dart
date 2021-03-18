@@ -47,13 +47,13 @@ class FavoriteItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    item.title,
+                    item.title!,
                     style: Theme.of(context).textTheme.headline5,
                     overflow: TextOverflow.fade,
                     softWrap: false,
                   ),
                   Text(
-                    DateFormat.MMMMEEEEd().format(item.date),
+                    DateFormat.MMMMEEEEd().format(item.date!),
                     style: TextStyle(
                       color: Colors.grey[600],
                     ),

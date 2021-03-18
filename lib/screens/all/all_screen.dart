@@ -18,7 +18,7 @@ class AllScreen extends StatelessWidget {
               : Consumer<Papers>(
                   child: HeroSection(),
                   builder: (ctx, papers, child) => papers.items.length <= 0
-                      ? child
+                      ? child!
                       : ListView.builder(
                           itemBuilder: (ctx, i) => CartItem(papers.items[i], i, i == 0 ? null : papers.items[i - 1].date),
                           itemCount: papers.items.length,
